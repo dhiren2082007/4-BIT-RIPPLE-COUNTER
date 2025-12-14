@@ -1,5 +1,5 @@
-# 4-BIT-RIPPLE-COUNTER
-
+## EX-12 4-BIT-RIPPLE-COUNTER
+## DATE: 14-12-2024
 **AIM:**
 
 To implement  4 Bit Ripple Counter using verilog and validating their functionality using their functional tables
@@ -24,17 +24,86 @@ In timing diagram Q0 is changing as soon as the negative edge of clock pulse is 
 
 **Procedure**
 
-/* write all the steps invloved */
+  1. Type the program in Quartus software.
+  
+  2. Compile and run the program.
+  
+  3. Generate the RTL schematic and save the logic diagram.
+  
+  4. Create nodes for inputs and outputs to generate the timing diagram.
+  
+  5. For different input combinations generate the timing diagram.
+
 
 **PROGRAM**
+```
+module BRC (
 
+input clk, // Clock input
+
+input reset, // Reset input (active high)
+
+output [3:0] q // 4-bit output
+
+);
+
+// Internal signals for flip-flops
+
+reg [3:0] q_int;
+
+// Assign internal register to output
+
+assign q = q_int;
+
+always @(posedge clk or posedge reset) begin
+
+if (reset)
+
+q_int[0] <= 1'b0; // Reset the first bit to 0
+
+else
+
+q_int[0] <= ~q_int[0]; // Toggle the first bit on clock edge
+
+end
+
+// Generate the other flip-flops based on the output of the previous one
+
+genvar i;
+
+generate
+
+for (i = 1; i < 4; i = i + 1) begin : ripple
+
+always @(posedge q_int[i-1] or posedge reset) begin
+
+if (reset)
+
+q_int[i] <= 1'b0; // Reset the bit to 0
+
+else
+
+q_int[i] <= ~q_int[i]; // Toggle the bit on clock edge of previous stage
+
+end
+
+end
+
+endgenerate
+
+endmodule
+```
 /* Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
 
- Developed by: RegisterNumber:
+## Developed by:DHIREN D
+## RegisterNumber:25007814
 */
 
 **RTL LOGIC FOR 4 Bit Ripple Counter**
+![image](https://github.com/user-attachments/assets/09030229-b105-4791-8348-9c946cc48bc6)
 
 **TIMING DIGRAMS FOR 4 Bit Ripple Counter**
+![image](https://github.com/user-attachments/assets/c2452fd0-0feb-427f-8396-6bfde6afe4c8)
 
 **RESULTS**
+The given Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
